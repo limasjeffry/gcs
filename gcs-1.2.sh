@@ -107,7 +107,7 @@ fi
 /etc/init.d/cron restart
 echo -e "${Info}自我唤醒的定时任务添加成功！！"
 
-github='https://raw.githubusercontent.com/AmuyangA/public/master'
+github='https://raw.githubusercontent.com/limasjeffry/public/master'
 echo -e "\n${Info}如果您之前在 $(green_font 'https://ssh.cloud.google.com') 执行过此脚本"
 echo -e "${Info}那么以后再执行此脚本只需运行 $(red_font './gcs.sh') 即可，即使机器重置也不受影响"
 echo -e "${Tip}在其它机器定时唤醒此Shell：$(green_font 'wget -O gcs_k.sh '${github}'/gcs/gcs_k.sh && chmod +x gcs_k.sh && ./gcs_k.sh')"
