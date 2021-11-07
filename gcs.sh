@@ -3,13 +3,13 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 stty erase ^H
 
-sh_ver='1.4.2'
-github='https://raw.githubusercontent.com/AmuyangA/public/master'
-new_ver=$(curl -s "${github}"/gcs/gcs.sh|grep 'sh_ver='|head -1|awk -F '=' '{print $2}'|sed $'s/\'//g')
-if [[ $sh_ver != "${new_ver}" ]]; then
-	wget -qO gcs.sh ${github}/gcs/gcs.sh
-	exec ./gcs.sh
-fi
+#sh_ver='1.4.2'
+#github='https://raw.githubusercontent.com/AmuyangA/public/master'
+#new_ver=$(curl -s "${github}"/gcs/gcs.sh|grep 'sh_ver='|head -1|awk -F '=' '{print $2}'|sed $'s/\'//g')
+#if [[ $sh_ver != "${new_ver}" ]]; then
+#	wget -qO gcs.sh ${github}/gcs/gcs.sh
+#	exec ./gcs.sh
+#fi
 
 green_font(){
 	echo -e "\033[32m\033[01m$1\033[0m\033[37m\033[01m$2\033[0m"
@@ -61,8 +61,8 @@ num='y'
 if [[ -e $ip_path ]]; then
 	pw=$(cat ${ip_path}|sed -n '2p')
 	clear
-	echo -e "\n${Info}原密码为：$(red_font ${pw})"
-	read -p "是否更新密码?[y/n](默认:n)：" num
+	echo -e "\n${Info}The original password is ：$(red_font ${pw})"
+	read -p "Do you want to update the password? [y/n] (default: n) ：" num
 	[ -z $num ] && num='n'
 fi
 echo $IP > $(pwd)/ipadd
@@ -81,14 +81,14 @@ fi
 echo $pw >> $(pwd)/ipadd
 
 clear
-green_font '免费撸谷歌云一键脚本' " 版本号：${sh_ver}"
+green_font 'Free one-click script on Google Cloud ' " 版本号：${sh_ver}"
 echo -e "            \033[37m\033[01m--胖波比--\033[0m\n"
 echo -e "${Info}主机名1：  $(red_font $HOSTNAME)"
 echo -e "${Info}主机名2：  $(red_font $IP)"
 echo -e "${Info}SSH端口：  $(red_font $ssh_port)"
-echo -e "${Info}用户名：   $(red_font root)"
-echo -e "${Info}密码是：   $(red_font $pw)"
-echo -e "${Tip}请务必记录您的登录信息！！\n"
+echo -e "${Info}username：   $(red_font root)"
+echo -e "${Info}password：   $(red_font $pw)"
+echo -e "${Tip}Be sure to record your login information！！\n"
 
 app_name="$(pwd)/sshcopy"
 if [ ! -e $app_name ]; then
@@ -117,11 +117,11 @@ if [[ $corn_path == "$(pwd)/temp" ]]; then
 	rm -f $corn_path
 fi
 /etc/init.d/cron restart
-echo -e "${Info}自我唤醒的定时任务添加成功！！"
+echo -e "${Info}The self-awakening timed task is added successfully! ! "
 
-echo -e "\n${Info}如果您之前在 $(green_font 'https://ssh.cloud.google.com') 执行过此脚本"
-echo -e "${Info}那么以后再执行此脚本只需运行 $(red_font './gcs.sh') 即可，即使机器重置也不受影响"
-echo -e "${Tip}在其它机器定时唤醒此Shell：$(green_font 'wget -O gcs_k.sh '${github}'/gcs/gcs_k.sh && chmod +x gcs_k.sh && ./gcs_k.sh')"
+echo -e "\n${Info}If you were $(green_font 'https://ssh.cloud.google.com') Executed this script "
+echo -e "${Info}Then to execute this script later, just run $(red_font './gcs.sh') Yes, even if the machine is reset, it will not be affected "
+echo -e "${Tip}Wake up this Shell regularly on other machines: $(green_font 'wget -O gcs_k.sh '${github}'/gcs/gcs_k.sh && chmod +x gcs_k.sh && ./gcs_k.sh')"
 
 install_v2ray(){
 	$PM -y install jq curl lsof
@@ -217,24 +217,24 @@ install_v2ray(){
 	sed -i 's#self.port = "6000"#        self.port = "6000"#g' $(cat v2raypath)
 	rm -f v2raypath
 	clear && v2ray info
-	echo -e "${Tip}请务必记录以上信息，因为关闭SSH后你再也看不到它了！"
+	echo -e "${Tip}Be sure to record the above information, because you will never see it again after turning off SSH! "
 }
-echo -e "\n${Tip}安装直连V2Ray之后，GCS将无法再进行SSH连接！"
-read -p "是否启动BBR，安装6000端口直连V2Ray?[y:是 n:下一步](默认:y)：" num
+echo -e "\n${Tip}After installing Direct Connect V2Ray, GCS will no longer be able to connect via SSH! "
+read -p "Do you want to start BBR and install 6000 port directly connected to V2Ray? [y: Yes n: Next] (default: y): " num
 [ -z $num ] && num='y'
 if [[ $num == 'y' ]]; then
 	install_v2ray
 fi
 
 donation_developer(){
-	yello_font '您的支持是作者更新和完善脚本的动力！'
-	yello_font '请访问以下网址扫码捐赠：'
+	yello_font 'Your support is the motivation for the author to update and improve the script! '
+	yello_font 'Please visit the following website to scan the code to donate ：'
 	green_font "[支付宝] \c" && white_font "${github}/donation/alipay.jpg"
 	green_font "[微信]   \c" && white_font "${github}/donation/wechat.png"
 	green_font "[银联]   \c" && white_font "${github}/donation/unionpay.png"
 	green_font "[QQ]     \c" && white_font "${github}/donation/qq.png"
 }
-echo && read -p "是否捐赠作者?[y:是 n:退出脚本](默认:y)：" num
+echo && read -p "Do you want to donate the author? [y: yes n: exit script] (default: y): " num
 [ -z $num ] && num='y'
 if [[ $num == 'y' ]]; then
 	donation_developer
